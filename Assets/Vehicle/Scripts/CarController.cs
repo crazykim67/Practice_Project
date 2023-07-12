@@ -76,6 +76,7 @@ public class CarController : MonoBehaviour
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
 
+    [SerializeField]
     private float horizontalInput;
     private float verticalInput;
 
@@ -116,12 +117,27 @@ public class CarController : MonoBehaviour
     [SerializeField]
     private Transform rrWheelTr;
 
+    [SerializeField]
+    private Transform handle;
+    [SerializeField]
+    private float handleSen;
+
     private void FixedUpdate()
     {
         GetInout();
         HandleMotor();
         HandleSteering();
         UpdateWheels();
+
+        RotateHandle();
+    }
+
+    private void RotateHandle()
+    {
+        if(horizontalInput != 0)
+            handle.localRotation = Quaternion.Euler(handle.rotation.x, handle.rotation.y, -handleSen * horizontalInput);
+        else if(Mathf.Abs(horizontalInput) <= 0.15f)
+            handle.localRotation = Quaternion.Euler(handle.rotation.x, handle.rotation.y, 0);
     }
 
     private void UpdateWheels()
@@ -166,10 +182,13 @@ public class CarController : MonoBehaviour
         rlWheelCollider.brakeTorque = currentbreakForce;
         rrWheelCollider.brakeTorque = currentbreakForce;
 
-        flWheelCollider.brakeTorque = stopForce;
-        frWheelCollider.brakeTorque = stopForce;
-        rlWheelCollider.brakeTorque = stopForce;
-        rrWheelCollider.brakeTorque = stopForce;
+        if (!isBreaking)
+        {
+            flWheelCollider.brakeTorque = stopForce;
+            frWheelCollider.brakeTorque = stopForce;
+            rlWheelCollider.brakeTorque = stopForce;
+            rrWheelCollider.brakeTorque = stopForce;
+        }
     }
 
     private void GetInout()
