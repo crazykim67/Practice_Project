@@ -122,14 +122,27 @@ public class CarController : MonoBehaviour
     [SerializeField]
     private float handleSen;
 
+    public static float carSpeed;
+
+    private Rigidbody rg;
+
+    private void Awake()
+    {
+        rg = GetComponent<Rigidbody>();
+    }
     private void FixedUpdate()
     {
-        GetInout();
+        GetInput();
         HandleMotor();
         HandleSteering();
         UpdateWheels();
 
         RotateHandle();
+
+        if (rg.velocity.magnitude < 0.1f)
+            carSpeed = 0;
+        else
+            carSpeed = (rg.velocity.magnitude * 0.36f);
     }
 
     private void RotateHandle()
@@ -191,7 +204,7 @@ public class CarController : MonoBehaviour
         }
     }
 
-    private void GetInout()
+    private void GetInput()
     {
         horizontalInput = Input.GetAxis(HORIZONTAL);
         verticalInput = Input.GetAxis(VERTICAL);
