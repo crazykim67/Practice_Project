@@ -42,8 +42,6 @@ public class PlayerController : MonoBehaviour
         if (isGround() && playerVelocity.y < 0)
             playerVelocity.y = 0f;
 
-        Debug.Log(isGround());
-
         Movement();
 
         if (input.OnJump() && isGround())
