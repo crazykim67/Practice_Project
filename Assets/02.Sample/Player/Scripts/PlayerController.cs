@@ -32,8 +32,8 @@ public class PlayerController : MonoBehaviour
         input = InputManager.Instance;
         cameraTransform = Camera.main.transform;
 
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
