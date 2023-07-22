@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour
 {
     private static InputManager instance;
 
-    public static InputManager Instance
+    public static InputManager Instance 
     {
         get
         {
